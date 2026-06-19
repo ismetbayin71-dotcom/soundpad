@@ -17,6 +17,42 @@
             align-items: center;
         }
 
+        /* Sekme (Kategori) Butonları Konteyneri */
+        .tabs-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: #1e293b;
+            padding: 8px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        /* Sekme Butonları */
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            color: #f1f5f9;
+            background: #334155;
+        }
+
+        /* Aktif Olan Sekme */
+        .tab-btn.active {
+            background: #38bdf8;
+            color: #0f172a;
+            box-shadow: 0 4px 10px rgba(56, 189, 248, 0.4);
+        }
+
         /* En Üstteki Durdurma Butonu */
         .stop-btn {
             background: #ef4444;
@@ -45,13 +81,24 @@
             transform: scale(0.98);
         }
 
-        /* Ses Butonları Izgarası (Grid) */
-        .soundboard-container {
-            display: grid;
+        /* Kategorilerin İçeriği (Grid Sistemi) */
+        .kategori-icerik {
+            display: none; /* Varsayılan olarak gizli */
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 20px;
-            max-width: 800px;
+            max-width: 1000px;
             width: 100%;
+            animation: fadeIn 0.4s ease;
+        }
+
+        /* Aktif kategoriyi göstermek için */
+        .kategori-icerik.aktif {
+            display: grid;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Ses Butonlarının Tasarımı */
@@ -60,8 +107,8 @@
             border: 2px solid #475569;
             border-radius: 16px;
             color: #f1f5f9;
-            padding: 25px 15px;
-            font-size: 1rem;
+            padding: 20px 15px;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -70,12 +117,11 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            gap: 12px;
+            gap: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
             min-height: 120px;
         }
 
-        /* Butonların Üzerine Gelindiğinde (Hover) */
         .pad-btn:hover {
             transform: translateY(-4px);
             border-color: #38bdf8;
@@ -83,7 +129,6 @@
             background: #1e293b;
         }
 
-        /* Butona Basıldığında (Active) */
         .pad-btn:active {
             transform: translateY(1px);
         }
@@ -95,71 +140,127 @@
 </head>
 <body>
 
+    <div class="tabs-container">
+        <button class="tab-btn active" onclick="kategoriDegistir(event, 'kategori-genel')">Genel Sesler</button>
+        <button class="tab-btn" onclick="kategoriDegistir(event, 'kategori-akasya')">Akasya Durağı</button>
+    </div>
+
     <button class="stop-btn" onclick="sesDurdur()">
         <span>⏹️</span> Tüm Sesleri Durdur
     </button>
 
-    <div class="soundboard-container">
+
+    <div id="kategori-genel" class="kategori-icerik aktif">
         
-        <button class="pad-btn" onclick="sesCal('ses1')">
-            <span class="icon">😲</span>
-            <span>Akasya Durağı - Şaşırma</span>
+        <button class="pad-btn" onclick="sesCal('genel1')">
+            <span class="icon">🚨</span><span>Alarm</span>
         </button>
-        <audio id="ses1" src="sesler/Akasya Durağı - Şaşırma Ses Efekti.mp3"></audio>
+        <audio id="genel1" src="sesler/Alarm.mp3"></audio>
 
-        <button class="pad-btn" onclick="sesCal('ses2')">
-            <span class="icon">🚨</span>
-            <span>Alarm</span>
+        <button class="pad-btn" onclick="sesCal('genel2')">
+            <span class="icon">🥁</span><span>Ba Dum Tisss</span>
         </button>
-        <audio id="ses2" src="sesler/Alarm.mp3"></audio>
+        <audio id="genel2" src="sesler/badumtiss.mp3"></audio> 
+        </div>
 
-        <button class="pad-btn" onclick="sesCal('ses3')">
-            <span class="icon">🥁</span>
-            <span>Ba Dum Tisss</span>
-        </button>
-        <audio id="ses3" src="sesler/ba dum tisss.mp3"></audio>
 
-        <button class="pad-btn" onclick="sesCal('ses4')">
-            <span class="icon">🎵</span>
-            <span>Gökhan Kırdar - Barak Nefes</span>
-        </button>
-        <audio id="ses4" src="sesler/Gökhan Kırdar_ Barak Nefes.mp3"></audio>
+    <div id="kategori-akasya" class="kategori-icerik">
+        
+        <button class="pad-btn" onclick="sesCal('ak1')"><span class="icon">😲</span><span>Aboov - Sinan Kaya</span></button>
+        <audio id="ak1" src="sesler/akasyaduragi/Aboov - Sinan Kaya - Akasya Durağı - Ses Efekti.mp3"></audio>
 
-        <button class="pad-btn" onclick="sesCal('ses5')">
-            <span class="icon">🃏</span>
-            <span>Sinan Üçkağıt Müziği</span>
-        </button>
-        <audio id="ses5" src="sesler/Sinan Üçkağıt Müziği.mp3"></audio>
+        <button class="pad-btn" onclick="sesCal('ak2')"><span class="icon">❗</span><span>Şaşırma Efekti</span></button>
+        <audio id="ak2" src="sesler/akasyaduragi/Akasya Durağı - Şaşırma Ses Efekti.mp3"></audio>
 
-        <button class="pad-btn" onclick="sesCal('ses6')">
-            <span class="icon">🎹</span>
-            <span>Tırırırın Tırırırın Tırın</span>
-        </button>
-        <audio id="ses6" src="sesler/Tırırırın Tırırırın Tırın.mp3"></audio>
+        <button class="pad-btn" onclick="sesCal('ak3')"><span class="icon">😢</span><span>Ali Kefal Kovulma</span></button>
+        <audio id="ak3" src="sesler/akasyaduragi/Ali Kefal İşten Kovulma Hüzünlü Müziği - Akasya Durağı - Ses Efekti.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('ak4')"><span class="icon">🐟</span><span>Ali Kefal Nuri Babacum</span></button>
+        <audio id="ak4" src="sesler/akasyaduragi/Ali Kefal Nuri Babacum Karadeniz Müziği - Akasya Durağı - Ses Efektleri.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('ak5')"><span class="icon">❓</span><span>Değişik Geçiş (Şaşırma)</span></button>
+        <audio id="ak5" src="sesler/akasyaduragi/Değişik Geçiş (Şaşırma) Efekti - Akasya Durağı - Ses Efekti.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('ak6')"><span class="icon">🏚️</span><span>Durak Yıkılıyor Hüzünlü</span></button>
+        <audio id="ak6" src="sesler/akasyaduragi/Durak Yıkılıyor Hüzünlü Müzik - Akasya Durağı - Ses Efekti.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('ak7')"><span class="icon">🎶</span><span>Barak Nefes</span></button>
+        <audio id="ak7" src="sesler/akasyaduragi/Gökhan Kırdar_ Barak Nefes.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('ak8')"><span class="icon">🎬</span><span>Jenerik Müziği</span></button>
+        <audio id="ak8" src="sesler/akasyaduragi/Jenerik Müziği Giriş - Akasya Durağı - Ses Efekti.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('ak9')"><span class="icon">🕵️</span><span>Operasyona Hazırlık</span></button>
+        <audio id="ak9" src="sesler/akasyaduragi/Operasyona Hazırlık Müziği - Akasya Durağı - Ses Efekti.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('ak10')"><span class="icon">👍</span><span>Osman Aga - Ne Ka Güzel</span></button>
+        <audio id="ak10" src="sesler/akasyaduragi/Osman Aga - Ne Ka Güzel Ne Ka Güzel - Akasya Durağı - Ses Efekti.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('ak11')"><span class="icon">🏃</span><span>Polonezköy Kaçırılma</span></button>
+        <audio id="ak11" src="sesler/akasyaduragi/Polonezköy Çıkışı Kaçırılma - Tehlike Müziği Akasya Durağı Ses Efekti.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('ak12')"><span class="icon">✈️</span><span>Sinan - Tek Rakibim THY</span></button>
+        <audio id="ak12" src="sesler/akasyaduragi/Sinan - Tek Rakibim Var Türk Hava Yolları - Akasya Durağı - Ses Efekti.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('ak13')"><span class="icon">👋</span><span>Sinan Kaya - İyi Günler</span></button>
+        <audio id="ak13" src="sesler/akasyaduragi/Sinan Kaya - İyi Günler Akasya Durağı - Ses Efekti.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('ak14')"><span class="icon">🃏</span><span>Sinan Üçkağıt Müziği</span></button>
+        <audio id="ak14" src="sesler/akasyaduragi/Sinan Üçkağıt Müziği.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('ak15')"><span class="icon">🚕</span><span>Taksi Lazımdır Ağabey</span></button>
+        <audio id="ak15" src="sesler/akasyaduragi/Taksi Lazımdır Ağabey - Akasya Durağı - Ses Efekti.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('ak16')"><span class="icon">🎹</span><span>Tırırırın Tırırırın</span></button>
+        <audio id="ak16" src="sesler/akasyaduragi/Tırırırın Tırırırın Tırın.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('ak17')"><span class="icon">🗣️</span><span>Usman Aga Safiye'yle Tartışma</span></button>
+        <audio id="ak17" src="sesler/akasyaduragi/Usman Aga Safiye'yle Tartışma Müziği - Akasya Durağı - Ses Efekti.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('ak18')"><span class="icon">🚓</span><span>Usman Aga Suçluyu Yakalama</span></button>
+        <audio id="ak18" src="sesler/akasyaduragi/Usman Aga Suçluyu Polisten Önce Yakalama Müziği - Akasya Durağı - Ses Efekti.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('ak19')"><span class="icon">🚶‍♂️</span><span>Usmanım Nereye Gidersin</span></button>
+        <audio id="ak19" src="sesler/akasyaduragi/Usmanım Nereye Gidersin - Akasya Durağı - Ses Efekti.mp3"></audio>
 
     </div>
 
     <script>
-        // O an çalan sesi hafızada tutmak için değişken
+        // --- 1. Sekme Değiştirme Fonksiyonu ---
+        function kategoriDegistir(event, kategoriId) {
+            // Tüm kategori içeriklerini bul ve gizle
+            let icerikler = document.getElementsByClassName("kategori-icerik");
+            for (let i = 0; i < icerikler.length; i++) {
+                icerikler[i].classList.remove("aktif");
+            }
+
+            // Tüm sekme butonlarından 'active' sınıfını sil (mavi rengi kaldır)
+            let butonlar = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < butonlar.length; i++) {
+                butonlar[i].classList.remove("active");
+            }
+
+            // Tıklanan sekmeyi aktif yap ve ilgili içeriği göster
+            document.getElementById(kategoriId).classList.add("aktif");
+            event.currentTarget.classList.add("active");
+        }
+
+        // --- 2. Ses Oynatma ve Durdurma Sistemi ---
         let calanSes = null;
 
         function sesCal(id) {
-            // Eğer zaten bir ses çalıyorsa önce onu durdur (Seslerin üst üste binmemesi için)
             if (calanSes) {
                 calanSes.pause();
                 calanSes.currentTime = 0;
             }
-
-            // Yeni seçilen sesi bul ve oynat
             const ses = document.getElementById(id);
             if (ses) {
                 ses.currentTime = 0;
                 ses.play();
-                calanSes = ses; // Şu an çalan ses olarak kaydet
+                calanSes = ses;
             }
         }
 
-        // En üstteki "Tüm Sesleri Durdur" butonunun fonksiyonu
         function sesDurdur() {
             if (calanSes) {
                 calanSes.pause();
