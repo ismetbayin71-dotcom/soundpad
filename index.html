@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Soundpad</title>
+    <style>
+        /* Genel Sayfa Düzeni (Karanlık Tema) */
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            color: #38bdf8;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+        }
+
+        p.subtitle {
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+
+        /* Durum Çubuğu (O an ne çalıyor?) */
+        .status-display {
+            background: #1e293b;
+            padding: 15px 30px;
+            border-radius: 50px;
+            margin-bottom: 40px;
+            border: 1px solid #334155;
+            font-size: 1.1rem;
+            min-width: 250px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .status-display span {
+            color: #38bdf8;
+            font-weight: bold;
+        }
+
+        /* Soundpad Izgarası (Grid) */
+        .soundboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* Buton Tasarımları */
+        .pad-btn {
+            background: #1e293b;
+            border: 2px solid #475569;
+            border-radius: 16px;
+            color: #f1f5f9;
+            padding: 30px 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        /* Butonların Üzerine Gelindiğinde (Hover) */
+        .pad-btn:hover {
+            transform: translateY(-4px);
+            border-color: #38bdf8;
+            box-shadow: 0 8px 15px rgba(56, 189, 248, 0.2);
+            background: #1e293b;
+        }
+
+        /* Butona Basıldığında (Active efekti) */
+        .pad-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Farklı kategoriler için küçük ikon sembolleri (Emoji) */
+        .icon {
+            font-size: 1.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎙️ Cyber Soundpad</h1>
+    <p class="subtitle">Sesleri oynatmak için bir butona tıkla!</p>
+
+    <div class="status-display">
+        Durum: <span id="current-sound">Hazır 🟢</span>
+    </div>
+
+    <div class="soundboard-container">
+        
+        <button class="pad-btn" onclick="sesCal('meme1', 'Airhorn 🚨')">
+            <span class="icon">🚨</span>
+            <span>Airhorn</span>
+        </button>
+        <audio id="meme1" src="sesler/airhorn.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('meme2', 'Hüzünlü Keman 🎻')">
+            <span class="icon">🎻</span>
+            <span>Sad Violin</span>
+        </button>
+        <audio id="meme2" src="sesler/sad-violin.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('meme3', 'Alkış 👏')">
+            <span class="icon">👏</span>
+            <span>Alkış</span>
+        </button>
+        <audio id="meme3" src="sesler/alkis.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('meme4', 'Hata Sesi ❌')">
+            <span class="icon">❌</span>
+            <span>Windows Error</span>
+        </button>
+        <audio id="meme4" src="sesler/error.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('meme5', 'Yoo Sesi 🗣️')">
+            <span class="icon">🗣️</span>
+            <span>Yooo!</span>
+        </button>
+        <audio id="meme5" src="sesler/yooo.mp3"></audio>
+
+        <button class="pad-btn" onclick="sesCal('meme6', 'Coin Sesi 🪙')">
+            <span class="icon">🪙</span>
+            <span>Anime Coin</span>
+        </button>
+        <audio id="meme6" src="sesler/coin.mp3"></audio>
+
+    </div>
+
+    <script>
+        function sesCal(id, sesAdi) {
+            // Tıklanan sesi bul
+            var ses = document.getElementById(id);
+            
+            // Eğer ses dosyası bulunamazsa konsolda hata vermemesi için kontrol
+            if(ses) {
+                ses.currentTime = 0; // Sesi başa sar
+                ses.play(); // Oynat
+                
+                // Ekrandaki "Durum" yazısını güncelle
+                document.getElementById('current-sound').innerText = sesAdi + " Çalıyor...";
+                
+                // Ses bittiğinde durumu tekrar "Hazır" yap
+                ses.onended = function() {
+                    document.getElementById('current-sound').innerText = "Hazır 🟢";
+                };
+            }
+        }
+    </script>
+
+</body>
+</html>
